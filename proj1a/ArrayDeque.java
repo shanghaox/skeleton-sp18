@@ -2,7 +2,7 @@ public class ArrayDeque<T> {
 
     private static int RFACTOR = 100;
     private static int INITLENGTH = 10;
-    private T items[];
+    private T[] items;
     private int size;
 
     public boolean isEmpty() {
@@ -47,7 +47,7 @@ public class ArrayDeque<T> {
         }
         T[] temp = (T[]) new Object[items.length];
         temp[0] = x;
-        System.arraycopy(items,0,temp,1,size);
+        System.arraycopy(items, 0, temp, 1, size);
         items = temp;
         size++;
     }
@@ -55,7 +55,7 @@ public class ArrayDeque<T> {
     /**
      * Returns the item from the back of the list.
      */
-    public T getLast() {
+    private T getLast() {
         //        shrink();
         return items[size - 1];
     }
@@ -71,9 +71,9 @@ public class ArrayDeque<T> {
         //        }
         return items[i];
     }
-    public void printDeque(){
+    public void printDeque() {
         for (int i = 0; i < size; i++) {
-            System.out.println(items[i]+" ");
+            System.out.println(items[i] + " ");
         }
     }
     /**
@@ -87,7 +87,7 @@ public class ArrayDeque<T> {
      * Deletes item from back of the list and
      * returns deleted item.
      */
-    public T removeFirst(){
+    public T removeFirst() {
         T[] temp = (T[]) new Object[items.length];
         T tempi = items[0];
         System.arraycopy(items, 1, temp, 0, size - 1);
@@ -104,7 +104,7 @@ public class ArrayDeque<T> {
     }
 
 
-    public static int[] flatten(int[][] x) {
+    private static int[] flatten(int[][] x) {
         int totalLength = 0;
         for (int i = 0; i < x.length; i++) {
             totalLength++;
@@ -122,7 +122,7 @@ public class ArrayDeque<T> {
         return a;
     }
 
-    public static void print1d(int[] a) {
+    private static void print1d(int[] a) {
         for (int i = 0; i < a.length; i++) {
             System.out.println(a[i] + " ");
         }
