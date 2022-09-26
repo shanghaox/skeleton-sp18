@@ -1,91 +1,101 @@
 public class LinkedListDeque<T> {
-    private class Node {
-        Node prev;
-        Node next;
-        //        int size;
-        T item;
+    private class LinkedNode{
+        public LinkedNode prev;
+        public LinkedNode next;
+        public T data;
 
-        public Node(T item, Node prev, Node next) {
-            this.item = item;
-            this.prev = prev;
-            this.next = next;
-        }
-
-        public Node(Node prev, Node next) {
+        LinkedNode(T data, LinkedNode prev, LinkedNode next) {
+            this.data = data;
             this.prev = prev;
             this.next = next;
         }
 
     }
-    private int size;
-    final private Node sentinel;
-    public LinkedListDeque() {//TODO:public
-        sentinel = new Node(null,null);
-        sentinel.prev = sentinel;
+    public LinkedNode sentinel;
+    public int size;
+
+    public LinkedListDeque() {
+        sentinel = new LinkedNode(null,sentinel, sentinel);
+        sentinel.prev = sentinel;//sentinel前后都指向自己出问题了？
         sentinel.next = sentinel;
+        size = 0;
+    }
+
+    public LinkedListDeque(T x) {
+        sentinel = new LinkedNode(null,sentinel, sentinel);
+        sentinel.next = new LinkedNode(x, sentinel, sentinel.next);
+        size = 1;
     }
 
     public void addFirst(T item) {
-//        if (sentinel == null) {
-//
-//        }
-        Node newNode = new Node(item,sentinel,sentinel.next);
-        sentinel.next.prev = newNode;
-        sentinel.next = newNode;
+        sentinel.next = new LinkedNode(item, sentinel, sentinel.next);
+        sentinel.next.next.prev = sentinel.next;
         size++;
     }
-
     public void addLast(T item) {
-        Node newNode = new Node(item,sentinel.prev, sentinel);
-        sentinel.prev.next = newNode;//TODO：去掉一个prev
-        sentinel.prev = newNode;
+        sentinel.prev = new LinkedNode(item, sentinel.prev, sentinel);
+        sentinel.prev.prev.next = sentinel.prev;
         size++;
     }
     public boolean isEmpty() {
-        return size==0;
+        return size == 0;
     }
+
     public int size() {
-        return this.size;
+        return size;
     }
 
     public void printDeque() {
-        Node temp = sentinel;
-        for (int i = 0; i < size; i++) {
-            temp = temp.next;
-            System.out.print(temp.item+" ");
+        LinkedNode p = sentinel.next;
+        for (int i = 0; i < size-1; i++) {
+            System.out.println(p.data+" ");
+            p = p.next;
         }
-        System.out.println();
     }
+
     public T removeFirst() {
-        T result = sentinel.next.item;
-        sentinel.next=sentinel.next.next;
-        sentinel.next.prev = sentinel;
+        T temp = sentinel.next.data;
+        sentinel.next = sentinel.next.next;
         size--;
-        return result;
+        return temp;
     }
+
     public T removeLast() {
-        T result = sentinel.prev.item;
+        T temp = sentinel.prev.data;
         sentinel.prev = sentinel.prev.prev;
-        sentinel.prev.next=sentinel;
         size--;
-        return result;
+        return temp;
     }
 
     public T get(int index) {
-        Node temp = sentinel;
-        for (int i = 1; i <= index; i++) {
-            temp = temp.next;
+        int count = 0;
+        LinkedNode p = sentinel.next;
+        while (count < index) {
+            p = p.next;
+            count++;
         }
-        return temp.item;
+        return p.data;
     }
-
     public T getRecursive(int index) {
-        return getRecursiveHelp(sentinel,index);
+        return getRecursiveHelper(sentinel.next, index);
     }
-    public T getRecursiveHelp(Node start, int index) {
-        return getRecursiveHelp(start.next,index--);
+    private T getRecursiveHelper(LinkedNode t,int times) {
+        if (times == 0) {
+            return t.data;
+        }else{
+            return getRecursiveHelper(t.next, times - 1);}
     }
 
 
+    public static void main(String[] args) {
+        LinkedListDeque<String> lld1 = new LinkedListDeque<String>();
+        lld1.addFirst("front");
+        lld1.addLast("middle");
+        lld1.addLast("back");
+        lld1.printDeque();
 
+
+
+
+    }
 }
