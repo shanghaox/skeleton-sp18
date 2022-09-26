@@ -1,8 +1,8 @@
 public class LinkedListDeque<T> {
-    private class LinkedNode{
-        public LinkedNode prev;
-        public LinkedNode next;
-        public T data;
+    private class LinkedNode {
+        private LinkedNode prev;
+        private LinkedNode next;
+        private T data;
 
         LinkedNode(T data, LinkedNode prev, LinkedNode next) {
             this.data = data;
@@ -11,18 +11,19 @@ public class LinkedListDeque<T> {
         }
 
     }
-    public LinkedNode sentinel;
-    public int size;
+    private LinkedNode sentinel;
+    private int  size;
 
     public LinkedListDeque() {
-        sentinel = new LinkedNode(null,sentinel, sentinel);
-        sentinel.prev = sentinel;//sentinel前后都指向自己出问题了？
+        sentinel = new LinkedNode(null, sentinel, sentinel);
+        sentinel.prev = sentinel;
+        //sentinel前后都指向自己出问题了？
         sentinel.next = sentinel;
         size = 0;
     }
 
     public LinkedListDeque(T x) {
-        sentinel = new LinkedNode(null,sentinel, sentinel);
+        sentinel = new LinkedNode(null, sentinel, sentinel);
         sentinel.next = new LinkedNode(x, sentinel, sentinel.next);
         size = 1;
     }
@@ -47,8 +48,8 @@ public class LinkedListDeque<T> {
 
     public void printDeque() {
         LinkedNode p = sentinel.next;
-        for (int i = 0; i < size-1; i++) {
-            System.out.println(p.data+" ");
+        for (int i = 0; i < size - 1; i++) {
+            System.out.println(p.data + " ");
             p = p.next;
         }
     }
@@ -79,16 +80,17 @@ public class LinkedListDeque<T> {
     public T getRecursive(int index) {
         return getRecursiveHelper(sentinel.next, index);
     }
-    private T getRecursiveHelper(LinkedNode t,int times) {
+    private T getRecursiveHelper(LinkedNode t, int times) {
         if (times == 0) {
             return t.data;
-        }else{
-            return getRecursiveHelper(t.next, times - 1);}
+        } else {
+            return getRecursiveHelper(t.next, times - 1);
+        }
     }
 
 
     public static void main(String[] args) {
-        LinkedListDeque<String> lld1 = new LinkedListDeque<String>();
+        LinkedListDeque<String> lld1 = new LinkedListDeque<>();
         lld1.addFirst("front");
         lld1.addLast("middle");
         lld1.addLast("back");
