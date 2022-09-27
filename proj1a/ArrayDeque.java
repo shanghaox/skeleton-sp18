@@ -88,6 +88,9 @@ public class ArrayDeque<T> {
      * returns deleted item.
      */
     public T removeFirst() {
+        if (size == 0) {
+            return null;
+        }
         T[] temp = (T[]) new Object[items.length];
         T tempi = items[0];
         System.arraycopy(items, 1, temp, 0, size - 1);
@@ -97,6 +100,9 @@ public class ArrayDeque<T> {
     public T removeLast() {
         //        shrink();
         //        T x = getLast();
+        if (size == 0) {
+            return null;
+        }
         T temp = items[size];
         items[size] = null;
         size--;
