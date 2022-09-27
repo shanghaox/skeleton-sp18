@@ -94,6 +94,7 @@ public class ArrayDeque<T> {
         T[] temp = (T[]) new Object[items.length];
         T tempi = items[0];
         System.arraycopy(items, 1, temp, 0, size - 1);
+        items = temp;
         size--;
         return tempi;
     }
