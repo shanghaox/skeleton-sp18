@@ -1,7 +1,7 @@
 public class ArrayDeque<T> {
 
     private static int RFACTOR = 100;
-    private static int INITLENGTH = 10;
+    private static int INITLENGTH = 8;
     private T[] items;
     private int size;
 
@@ -21,6 +21,9 @@ public class ArrayDeque<T> {
         T[] a = (T[]) new Object[newcap];
         System.arraycopy(items, 0, a, 0, size);
         items = a;
+    }
+    private int minusOne(int index) {
+        return index - 1;
     }
 
     private void shrink() {
